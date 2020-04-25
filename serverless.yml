@@ -1,0 +1,21 @@
+#serverless.yml
+service: serverless-nodejs-app
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+
+functions:
+  hello:
+    handler: app.server
+    events:
+      - http:
+        path: /
+        method: ANY
+        cors: true
+      - http: #all routes get proxied to the express router
+        path: /{proxy+}
+        method: ANY
+        cors: true
